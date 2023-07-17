@@ -3,9 +3,53 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33815.320
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BalanceSystem.Api", "BalanceApi\BalanceSystem.Api.csproj", "{DA8D9A62-744B-4B57-9128-33CF833C4738}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BalanceSystem.Core", "Balance.Core\BalanceSystem.Core.csproj", "{45956585-BE10-4103-8A8C-ECFA6580DEC2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{BD13E1B3-6EB4-442A-88A4-122ED035D371}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{E39E0B02-89BB-4859-9135-C3135C887F3E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{ECE1E2E4-6BCE-4D45-B24F-DF8EC33671E0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{0283F3AB-DF83-4B9D-B749-9CCAA4BF11BE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BalanceSystem.Services", "Balance.Services\BalanceSystem.Services.csproj", "{2675A24C-D0D6-44C4-ACE3-61D0EBF8C609}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BalanceSystem.DataAccess", "Balance.DataAccess\BalanceSystem.DataAccess.csproj", "{41F92319-E588-4CC6-A041-94C1647A2D70}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DA8D9A62-744B-4B57-9128-33CF833C4738}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA8D9A62-744B-4B57-9128-33CF833C4738}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA8D9A62-744B-4B57-9128-33CF833C4738}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA8D9A62-744B-4B57-9128-33CF833C4738}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45956585-BE10-4103-8A8C-ECFA6580DEC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45956585-BE10-4103-8A8C-ECFA6580DEC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45956585-BE10-4103-8A8C-ECFA6580DEC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45956585-BE10-4103-8A8C-ECFA6580DEC2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2675A24C-D0D6-44C4-ACE3-61D0EBF8C609}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2675A24C-D0D6-44C4-ACE3-61D0EBF8C609}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2675A24C-D0D6-44C4-ACE3-61D0EBF8C609}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2675A24C-D0D6-44C4-ACE3-61D0EBF8C609}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41F92319-E588-4CC6-A041-94C1647A2D70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41F92319-E588-4CC6-A041-94C1647A2D70}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41F92319-E588-4CC6-A041-94C1647A2D70}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41F92319-E588-4CC6-A041-94C1647A2D70}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{DA8D9A62-744B-4B57-9128-33CF833C4738} = {0283F3AB-DF83-4B9D-B749-9CCAA4BF11BE}
+		{45956585-BE10-4103-8A8C-ECFA6580DEC2} = {BD13E1B3-6EB4-442A-88A4-122ED035D371}
+		{2675A24C-D0D6-44C4-ACE3-61D0EBF8C609} = {E39E0B02-89BB-4859-9135-C3135C887F3E}
+		{41F92319-E588-4CC6-A041-94C1647A2D70} = {E39E0B02-89BB-4859-9135-C3135C887F3E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C2E36C2B-3B78-429B-BD92-4C0EBEC15A03}
