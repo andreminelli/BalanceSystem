@@ -1,0 +1,19 @@
+version: '3.4'
+
+services:
+  balancesystem.api:
+    image: ${DOCKER_REGISTRY-}balancesystemapi
+    build:
+      context: .
+      dockerfile: BalanceApi/Dockerfile
+
+  database:
+    image: postgres:15
+    restart: always
+    volumes:
+      - ./data:/var/lib/postgresql/data
+    ports:
+      - "127.0.0.1:5432:5432"
+    environment:
+      - 'POSTGRES_PASSWORD=passW0rd'
+      - 'POSTGRES_DB=Balance'

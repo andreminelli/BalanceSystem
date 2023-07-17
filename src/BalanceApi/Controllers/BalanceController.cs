@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using BalanceSystem.Api.Services;
+using BalanceSystem.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BalanceSystem.Api.Controllers
@@ -8,10 +10,26 @@ namespace BalanceSystem.Api.Controllers
 	[Route("balances")]
 	public class BalanceController : ControllerBase
 	{
-		[HttpGet]
-		public async Task<IActionResult> GetAsync()
+		private readonly ILogger<BalanceController> _logger;
+		private readonly IAccountRetrievalService _accountRetrievalService;
+		private readonly IBalanceService _balanceService;
+
+		public BalanceController(
+			ILogger<BalanceController> logger,
+			IAccountRetrievalService accountRetrievalService,
+			IBalanceService balanceService)
 		{
-			return Ok();
+			_logger = logger;
+			_accountRetrievalService = accountRetrievalService;
+			_balanceService = balanceService;
+		}
+
+		[HttpGet]
+		public async Task<IActionResult> GetAsync(DateTimeOffset start, DateTimeOffset end)
+		{
+			var account = _accountRetrievalService.GetAuthenticated();
+			var balance = _balanceService.GetBalanceAsync(account, start, end);
+			return Ok(balance);
 		}
 	}
 }

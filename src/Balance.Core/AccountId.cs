@@ -1,17 +1,18 @@
 ﻿namespace BalanceSystem.Core
 {
-	public class AccountId : IComparable<AccountId>, IEquatable<AccountId>
+	public struct AccountId : IEquatable<AccountId>
 	{
-		public int CompareTo(AccountId? other)
-		{
-			throw new NotImplementedException();
-		}
+		private readonly string _accountId;
 
-		public bool Equals(AccountId? other)
-		{
-			throw new NotImplementedException();
-		}
+        public AccountId(string id)
+        {
+			_accountId = id;
+        }
 
+		public bool Equals(AccountId other)
+			=> _accountId.Equals(other._accountId);
 
+		public static explicit operator AccountId(string Id) 
+			=> new AccountId(Id);
 	}
 }

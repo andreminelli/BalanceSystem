@@ -5,6 +5,8 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <UserSecretsId>0469d959-aff4-4269-88b2-3b37ce0bd563</UserSecretsId>
+    <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,6 +17,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Balance.Core\BalanceSystem.Core.csproj" />
     <ProjectReference Include="..\Balance.Services\BalanceSystem.Services.csproj" />
+    <ProjectReference Include="..\BalanceSystem.DataAccess.Sqlite\BalanceSystem.DataAccess.PostgreSql.csproj" />
   </ItemGroup>
 
 </Project>
