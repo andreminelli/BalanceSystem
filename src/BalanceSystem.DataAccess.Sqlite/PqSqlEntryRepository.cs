@@ -1,5 +1,6 @@
 ﻿using BalanceSystem.Core;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ValueGeneration;
 using System.Diagnostics.CodeAnalysis;
 
 namespace BalanceSystem.DataAccess.PostgreSql
@@ -13,9 +14,10 @@ namespace BalanceSystem.DataAccess.PostgreSql
 			_dbContext = dbContext;
 		}
 
-		public Task AddEntryAsync(Account owner, Entry newEntry)
+		public async Task AddEntryAsync(Entry newEntry)
 		{
-			throw new NotImplementedException();
+			_dbContext.Entries.Add(newEntry);
+			await _dbContext.SaveChangesAsync();
 		}
 
 		[return: NotNull]

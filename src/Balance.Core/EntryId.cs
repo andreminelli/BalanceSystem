@@ -6,7 +6,7 @@ namespace BalanceSystem.Core
 	{
 		private readonly Guid _entryId;
 
-		public EntryId(Guid id)
+        public EntryId(Guid id)
 		{
 			_entryId = id;
 		}

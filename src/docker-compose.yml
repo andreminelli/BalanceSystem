@@ -6,10 +6,13 @@ services:
     build:
       context: .
       dockerfile: BalanceApi/Dockerfile
+    depends_on:
+      - database
 
   database:
     image: postgres:15
     restart: always
+    container_name: pgsql_database
     volumes:
       - ./data:/var/lib/postgresql/data
       - ./postgresql_init-user-db.sh:/docker-entrypoint-initdb.d/init-user-db.sh:ro
@@ -21,5 +24,6 @@ services:
   adminer:
     image: adminer
     restart: always
+    container_name: adminer_helper
     ports:
       - 8080:8080 

@@ -3,6 +3,7 @@ using BalanceSystem.Core;
 using BalanceSystem.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace BalanceSystem.Api.Controllers
 {
@@ -26,7 +27,7 @@ namespace BalanceSystem.Api.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> AddAsync([FromBody] Entry newEntry)
+		public async Task<IActionResult> AddAsync([FromBody(EmptyBodyBehavior = EmptyBodyBehavior.Allow)] Entry newEntry)
 		{
 			var account = _accountRetrievalService.GetAuthenticated();
 			await _balanceService.AddEntryAsync(account, newEntry);

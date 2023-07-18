@@ -38,18 +38,18 @@ builder.Services
 	.AddScoped<IBalanceService, BalanceService>();
 
 builder.Services
+	.AddScoped<IAccountRetrievalService, HttpContextAccountRetrievalService>();
+
+builder.Services
 	.AddHttpContextAccessor()
-	.AddControllers()
+	.AddControllers(
+		options => options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true)
 	.AddJsonOptions(opts =>
 	{
 		var enumConverter = new JsonStringEnumConverter();
 		opts.JsonSerializerOptions.Converters.Add(enumConverter);
 	});
 
-builder.Services
-	.AddScoped<IAccountRetrievalService, HttpContextAccountRetrievalService>();
-
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(setup =>
 	{
@@ -94,4 +94,20 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+ApplyMigrations(app);
+
 app.Run();
+
+void ApplyMigrations(WebApplication app)
+{
+	var logger = app.Services.GetRequiredService<ILoggerProvider>().CreateLogger("Startup");
+	using var scope = app.Services.GetRequiredService<IServiceScopeFactory>().CreateScope();
+	using var context = scope.ServiceProvider.GetRequiredService<BalanceDbContext>();
+
+	var pendingMigrations = context.Database.GetPendingMigrations();
+	if (pendingMigrations.Any())
+	{
+		logger.LogInformation("Applying {PendingMigrations} migrations", pendingMigrations.Count());
+		context.Database.Migrate();
+	}
+}

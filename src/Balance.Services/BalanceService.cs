@@ -14,7 +14,9 @@ namespace BalanceSystem.Services
         public async Task AddEntryAsync(Account account, Entry entry)
 		{
 			// TODO Add validations
-			await _entryRepository.AddEntryAsync(account, entry);
+			//entry.Account = account;
+			entry.AccountId = account.Id;
+			await _entryRepository.AddEntryAsync(entry);
 		}
 
 		public async Task<Balance> GetBalanceAsync(Account account, DateTimeOffset startDate, DateTimeOffset endDate)

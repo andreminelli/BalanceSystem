@@ -16,7 +16,12 @@ namespace BalanceSystem.DataAccess.PostgreSql.Configurations
 				.Property(entry => entry.Id)
 				.HasConversion(
 					entryId => (Guid)entryId,
-					id => new EntryId(id));
+					id => new EntryId(id))
+				.ValueGeneratedOnAdd().HasValueGenerator<EntryIdValueGenerator>();
+
+			builder
+				.Property(entry => entry.Type)
+				.HasConversion<string>();
 
 			builder
 				.Property(entry => entry.AccountId)
@@ -25,8 +30,7 @@ namespace BalanceSystem.DataAccess.PostgreSql.Configurations
 					id => new AccountId(id));
 
 			builder
-				.HasOne(entry => entry.Account)
-				.WithMany(account => account.Entries);
+				.HasOne(entry => entry.Account);
 		}
 	}
 }

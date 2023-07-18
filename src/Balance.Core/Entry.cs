@@ -4,12 +4,12 @@
 	{
         public EntryId Id { get; set; }
 
-		public AccountId AccountId { get; init; }
-		public Account Account { get; init; }
+		public AccountId AccountId { get; set; }
+		public Account Account { get; set; }
 
 		public DateTimeOffset Date { get; init; }
 		public EntryType Type { get; init; }
-        public string Description { get; set; }
+        public string Description { get; init; }
         public decimal Amount { get; init; }
 	}
 }
