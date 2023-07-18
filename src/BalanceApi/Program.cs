@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Text;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,10 +23,15 @@ builder.Services
 			options.TokenValidationParameters = new TokenValidationParameters
 			{
 				ValidateIssuerSigningKey = false,
-				IssuerSigningKey = new SymmetricSecurityKey(Convert.FromBase64String("NTNv7j0TuYARvmNMmWXo6fKvM4o6nv/aUi9ryX38ZH+L1bkrnD1ObOQ8JAUmHCBq7Iy7otZcyAagBLHVKvvYaIpmMuxmARQ97jUVG16Jkpkp1wXOPsrF9zwew6TpczyHkHgX5EuLg2MeBuiT/qJACs1J0apruOOJCg/gOtkjB4c=")),
+				IssuerSigningKeys = new SecurityKey[]
+				{
+					new SymmetricSecurityKey(Convert.FromBase64String("NTNv7j0TuYARvmNMmWXo6fKvM4o6nv/aUi9ryX38ZH+L1bkrnD1ObOQ8JAUmHCBq7Iy7otZcyAagBLHVKvvYaIpmMuxmARQ97jUVG16Jkpkp1wXOPsrF9zwew6TpczyHkHgX5EuLg2MeBuiT/qJACs1J0apruOOJCg/gOtkjB4c=")),
+					new SymmetricSecurityKey(Encoding.UTF8.GetBytes("qwertyuiopasdfghjklzxcvbnm123456"))
+				},
+				TryAllIssuerSigningKeys = true,
 				ValidateIssuer = false,
 				ValidateAudience = false,
-				ValidateLifetime = false
+				ValidateLifetime = true
 			};
 		});
 
@@ -39,7 +45,8 @@ builder.Services
 	.AddScoped<IBalanceService, BalanceService>();
 
 builder.Services
-	.AddScoped<IAccountRetrievalService, HttpContextAccountRetrievalService>();
+	.AddScoped<IAccountRetrievalService, HttpContextAccountRetrievalService>()
+	.Decorate<IAccountRetrievalService, AutoInsertAccountRetrievalServiceDecorator>();
 
 builder.Services
 	.AddHttpContextAccessor()

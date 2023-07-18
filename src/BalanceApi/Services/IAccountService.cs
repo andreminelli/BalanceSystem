@@ -4,6 +4,6 @@ namespace BalanceSystem.Api.Services
 {
 	public interface IAccountRetrievalService
 	{
-		Account GetAuthenticated();
+		ValueTask<Account> GetAuthenticatedAsync();
 	}
 }

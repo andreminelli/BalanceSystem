@@ -29,7 +29,7 @@ namespace BalanceSystem.Api.Controllers
 		[HttpPost]
 		public async Task<IActionResult> AddAsync([FromBody(EmptyBodyBehavior = EmptyBodyBehavior.Allow)] Entry newEntry)
 		{
-			var account = _accountRetrievalService.GetAuthenticated();
+			var account = await _accountRetrievalService.GetAuthenticatedAsync();
 			await _balanceService.AddEntryAsync(account, newEntry);
 			return CreatedAtAction(null, null);
 		}

@@ -27,7 +27,7 @@ namespace BalanceSystem.Api.Controllers
 		[HttpGet]
 		public async Task<IActionResult> GetAsync(DateTimeOffset start, DateTimeOffset end)
 		{
-			var account = _accountRetrievalService.GetAuthenticated();
+			var account = await _accountRetrievalService.GetAuthenticatedAsync();
 			var balance = await _balanceService.GetBalanceAsync(account, start, end);
 			return Ok(balance);
 		}

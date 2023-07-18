@@ -17,5 +17,15 @@ namespace BalanceSystem.DataAccess.PostgreSql
 			return await _dbContext.Accounts
 				.FirstOrDefaultAsync(account => account.Id == accountId);
 		}
+
+		public async Task AddIfNewAsync(Account account)
+		{
+			var existingAccount = await GetByIdAsync(account.Id);
+			if (existingAccount is null)
+			{
+				_dbContext.Accounts.Add(account);
+				await _dbContext.SaveChangesAsync();
+			}
+		}
 	}
 }
