@@ -1,4 +1,5 @@
 ﻿using BalanceSystem.Core;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics.CodeAnalysis;
 
 namespace BalanceSystem.DataAccess.PostgreSql
@@ -18,9 +19,16 @@ namespace BalanceSystem.DataAccess.PostgreSql
 		}
 
 		[return: NotNull]
-		public Task<IEnumerable<Entry>> GetEntriesAsync(Account account, DateTimeOffset startDate, DateTimeOffset endDate)
+		public async Task<IEnumerable<Entry>> GetEntriesAsync(Account account, DateTimeOffset startDate, DateTimeOffset endDate)
 		{
-			throw new NotImplementedException();
+			var entries = await _dbContext.Entries
+				.Where(entry => 
+					entry.Account == account &&
+					entry.Date >= startDate &&
+					entry.Date <= endDate)
+				.ToListAsync();
+
+			return entries;
 		}
 	}
 }

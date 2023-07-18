@@ -12,8 +12,14 @@ services:
     restart: always
     volumes:
       - ./data:/var/lib/postgresql/data
+      - ./postgresql_init-user-db.sh:/docker-entrypoint-initdb.d/init-user-db.sh:ro
     ports:
-      - "127.0.0.1:5432:5432"
+      - "5432:5432"
     environment:
       - 'POSTGRES_PASSWORD=passW0rd'
-      - 'POSTGRES_DB=Balance'
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080 
