@@ -7,16 +7,16 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["BalanceApi/BalanceApi.csproj", "BalanceApi/"]
-RUN dotnet restore "BalanceApi/BalanceApi.csproj"
+COPY ["BalanceSystem.Api/BalanceSystem.Api.csproj", "BalanceSystem.Api/"]
+RUN dotnet restore "BalanceSystem.Api/BalanceSystem.Api.csproj"
 COPY . .
-WORKDIR "/src/BalanceApi"
-RUN dotnet build "BalanceApi.csproj" -c Release -o /app/build
+WORKDIR "/src/BalanceSystem.Api"
+RUN dotnet build "BalanceSystem.Api.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "BalanceApi.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "BalanceSystem.Api.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "BalanceApi.dll"]
+ENTRYPOINT ["dotnet", "BalanceSystem.Api.dll"]
