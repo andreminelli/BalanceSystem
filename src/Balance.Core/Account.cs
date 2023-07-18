@@ -5,8 +5,7 @@ namespace BalanceSystem.Core
 	public class Account : IEquatable<Account>, IEqualityComparer<Account>
 	{
 		public AccountId Id { get; init; }
-
-		public ICollection<Entry> Entries { get; init; }
+		public string Name { get; init; }
 
 		public bool Equals(Account? other) 
 			=> Id.Equals(other?.Id);

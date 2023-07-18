@@ -29,7 +29,7 @@ namespace BalanceSystem.DataAccess.PostgreSql.Migrations
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     AccountId = table.Column<string>(type: "text", nullable: false),
                     Date = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
-                    Type = table.Column<int>(type: "integer", nullable: false),
+                    Type = table.Column<string>(type: "text", nullable: false),
                     Description = table.Column<string>(type: "text", nullable: false),
                     Amount = table.Column<decimal>(type: "numeric", nullable: false)
                 },

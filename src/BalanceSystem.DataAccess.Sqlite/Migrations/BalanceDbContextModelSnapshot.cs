@@ -27,6 +27,10 @@ namespace BalanceSystem.DataAccess.PostgreSql.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("text");
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.HasKey("Id");
 
                     b.ToTable("Accounts", (string)null);
@@ -66,17 +70,12 @@ namespace BalanceSystem.DataAccess.PostgreSql.Migrations
             modelBuilder.Entity("BalanceSystem.Core.Entry", b =>
                 {
                     b.HasOne("BalanceSystem.Core.Account", "Account")
-                        .WithMany("Entries")
+                        .WithMany()
                         .HasForeignKey("AccountId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Account");
-                });
-
-            modelBuilder.Entity("BalanceSystem.Core.Account", b =>
-                {
-                    b.Navigation("Entries");
                 });
 #pragma warning restore 612, 618
         }

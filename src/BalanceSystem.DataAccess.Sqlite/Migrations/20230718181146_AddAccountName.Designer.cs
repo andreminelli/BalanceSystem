@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BalanceSystem.DataAccess.PostgreSql.Migrations
 {
     [DbContext(typeof(BalanceDbContext))]
-    [Migration("20230718142054_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20230718181146_AddAccountName")]
+    partial class AddAccountName
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -30,6 +30,10 @@ namespace BalanceSystem.DataAccess.PostgreSql.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("text");
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.HasKey("Id");
 
                     b.ToTable("Accounts", (string)null);
@@ -38,6 +42,7 @@ namespace BalanceSystem.DataAccess.PostgreSql.Migrations
             modelBuilder.Entity("BalanceSystem.Core.Entry", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<string>("AccountId")
@@ -54,8 +59,9 @@ namespace BalanceSystem.DataAccess.PostgreSql.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("Type")
-                        .HasColumnType("integer");
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -67,17 +73,12 @@ namespace BalanceSystem.DataAccess.PostgreSql.Migrations
             modelBuilder.Entity("BalanceSystem.Core.Entry", b =>
                 {
                     b.HasOne("BalanceSystem.Core.Account", "Account")
-                        .WithMany("Entries")
+                        .WithMany()
                         .HasForeignKey("AccountId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Account");
-                });
-
-            modelBuilder.Entity("BalanceSystem.Core.Account", b =>
-                {
-                    b.Navigation("Entries");
                 });
 #pragma warning restore 612, 618
         }

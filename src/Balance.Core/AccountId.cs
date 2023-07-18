@@ -26,6 +26,9 @@ namespace BalanceSystem.Core
 		public override int GetHashCode()
 			=> _accountId.GetHashCode();
 
+		public override string ToString()
+			=> _accountId;
+
 		public static explicit operator AccountId(string Id)
 			=> new AccountId(Id);
 
