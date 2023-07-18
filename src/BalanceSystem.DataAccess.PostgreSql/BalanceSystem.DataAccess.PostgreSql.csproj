@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Balance.DataAccess\BalanceSystem.DataAccess.csproj" />
+    <ProjectReference Include="..\BalanceSystem.DataAccess\BalanceSystem.DataAccess.csproj" />
   </ItemGroup>
 
 </Project>

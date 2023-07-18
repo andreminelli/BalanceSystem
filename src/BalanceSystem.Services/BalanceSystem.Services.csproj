@@ -7,8 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Balance.Core\BalanceSystem.Core.csproj" />
-    <ProjectReference Include="..\Balance.DataAccess\BalanceSystem.DataAccess.csproj" />
+    <ProjectReference Include="..\BalanceSystem.Core\BalanceSystem.Core.csproj" />
+    <ProjectReference Include="..\BalanceSystem.DataAccess\BalanceSystem.DataAccess.csproj" />
   </ItemGroup>
 
 </Project>

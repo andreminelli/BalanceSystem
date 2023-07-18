@@ -15,7 +15,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services
 	.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 	.AddJwtBearer(JwtBearerDefaults.AuthenticationScheme,
-		//options => builder.Configuration.Bind("JwtSettings", options));
 		options =>
 		{
 			options.RequireHttpsMetadata = false;

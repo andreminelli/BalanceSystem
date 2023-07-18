@@ -21,9 +21,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Balance.Core\BalanceSystem.Core.csproj" />
-    <ProjectReference Include="..\Balance.Services\BalanceSystem.Services.csproj" />
-    <ProjectReference Include="..\BalanceSystem.DataAccess.Sqlite\BalanceSystem.DataAccess.PostgreSql.csproj" />
+    <ProjectReference Include="..\BalanceSystem.DataAccess.PostgreSql\BalanceSystem.DataAccess.PostgreSql.csproj" />
+    <ProjectReference Include="..\BalanceSystem.Services\BalanceSystem.Services.csproj" />
   </ItemGroup>
 
 </Project>
