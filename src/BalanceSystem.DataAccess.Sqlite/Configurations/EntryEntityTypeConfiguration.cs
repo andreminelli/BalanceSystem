@@ -24,12 +24,6 @@ namespace BalanceSystem.DataAccess.PostgreSql.Configurations
 				.HasConversion<string>();
 
 			builder
-				.Property(entry => entry.AccountId)
-				.HasConversion(
-					accountId => (string)accountId,
-					id => new AccountId(id));
-
-			builder
 				.HasOne(entry => entry.Account);
 		}
 	}

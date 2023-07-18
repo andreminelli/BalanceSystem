@@ -25,7 +25,7 @@ namespace BalanceSystem.DataAccess.PostgreSql
 		{
 			var entries = await _dbContext.Entries
 				.Where(entry => 
-					entry.Account == account &&
+					entry.Account.Id == account.Id &&
 					entry.Date >= startDate &&
 					entry.Date <= endDate)
 				.ToListAsync();

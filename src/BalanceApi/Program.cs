@@ -35,6 +35,7 @@ builder.Services
 
 builder.Services
 	.AddScoped<IEntryRepository, PqSqlEntryRepository>()
+	.AddScoped<IAccountRepository, PqSqlAccountRepository>()
 	.AddScoped<IBalanceService, BalanceService>();
 
 builder.Services

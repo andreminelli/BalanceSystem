@@ -20,6 +20,12 @@ namespace BalanceSystem.Core
 		public int GetHashCode([DisallowNull] EntryId obj)
 			=> obj._entryId.GetHashCode();
 
+		public override bool Equals([NotNullWhen(true)] object? obj)
+			=> obj is EntryId entryId ? Equals(entryId) : false;
+
+		public override int GetHashCode()
+			=> _entryId.GetHashCode();
+
 		public static explicit operator EntryId(Guid Id)
 			=> new EntryId(Id);
 
