@@ -11,19 +11,12 @@
         public string Description { get; init; }
         public decimal Amount { get; init; }
 
-		public decimal SumTo(decimal value = 0)
-		{
-			switch (Type)
+		public decimal SumTo(decimal value = 0) 
+			=> Type switch
 			{
-				case EntryType.Credit:
-					return value + Amount;
-
-				case EntryType.Debit:
-					return value - Amount;
-
-				default:
-					throw new ArgumentException("Invalid entry type");
-			}
-		}
+				EntryType.Credit => value + Amount,
+				EntryType.Debit => value - Amount,
+				_ => throw new ArgumentException("Invalid entry type"),
+			};
 	}
 }
