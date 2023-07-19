@@ -3,6 +3,7 @@ version: '3.4'
 services:
   balancesystem.api:
     image: ${DOCKER_REGISTRY-}balancesystemapi
+    container_name: balancesystem_api
     build:
       context: .
       dockerfile: Balancesystem.Api/Dockerfile

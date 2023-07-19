@@ -15,24 +15,20 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services
 	.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 	.AddJwtBearer(JwtBearerDefaults.AuthenticationScheme,
-		options =>
+		(Action<JwtBearerOptions>)(options =>
 		{
 			options.RequireHttpsMetadata = false;
 			options.SaveToken = true;
 			options.TokenValidationParameters = new TokenValidationParameters
 			{
-				ValidateIssuerSigningKey = false,
-				IssuerSigningKeys = new SecurityKey[]
-				{
-					new SymmetricSecurityKey(Convert.FromBase64String("NTNv7j0TuYARvmNMmWXo6fKvM4o6nv/aUi9ryX38ZH+L1bkrnD1ObOQ8JAUmHCBq7Iy7otZcyAagBLHVKvvYaIpmMuxmARQ97jUVG16Jkpkp1wXOPsrF9zwew6TpczyHkHgX5EuLg2MeBuiT/qJACs1J0apruOOJCg/gOtkjB4c=")),
-					new SymmetricSecurityKey(Encoding.UTF8.GetBytes("qwertyuiopasdfghjklzxcvbnm123456"))
-				},
+				ValidateIssuerSigningKey = true,
+				IssuerSigningKeys = GetKeysFrom(builder.Configuration.GetRequiredSection("Jwt:Keys")),
 				TryAllIssuerSigningKeys = true,
 				ValidateIssuer = false,
 				ValidateAudience = false,
 				ValidateLifetime = true
 			};
-		});
+		}));
 
 builder.Services
 	.AddDbContext<BalanceDbContext>(options =>
@@ -100,7 +96,7 @@ ApplyMigrations(app);
 
 app.Run();
 
-void ApplyMigrations(WebApplication app)
+static void ApplyMigrations(WebApplication app)
 {
 	var logger = app.Services.GetRequiredService<ILoggerProvider>().CreateLogger("Startup");
 	using var scope = app.Services.GetRequiredService<IServiceScopeFactory>().CreateScope();
@@ -112,4 +108,13 @@ void ApplyMigrations(WebApplication app)
 		logger.LogInformation("Applying {PendingMigrations} migrations", pendingMigrations.Count());
 		context.Database.Migrate();
 	}
+}
+
+static SecurityKey[] GetKeysFrom(IConfigurationSection configurationSection)
+{
+	var stringKeys = configurationSection.Get<string[]>();
+	var keys = stringKeys
+		.Select(key => new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key)))
+		.ToArray<SecurityKey>();
+	return keys;
 }
