@@ -24,6 +24,13 @@ namespace BalanceSystem.Api.Controllers
 			_balanceService = balanceService;
 		}
 
+		/// <summary>
+		/// Retorna o saldo consolidado apenas dos lançamentos no período especificado. 
+		/// </summary>
+		/// <param name="start">Data de início do periodo (inclusive)</param>
+		/// <param name="end">Data de fim do periodo (inclusive)</param>
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[HttpGet("summary")]
 		public async Task<IActionResult> GetSummaryAsync(DateTimeOffset? start, DateTimeOffset? end)
 		{
@@ -32,6 +39,13 @@ namespace BalanceSystem.Api.Controllers
 			return Ok(balance);
 		}
 
+		/// <summary>
+		/// Retorna o saldo diário consolidado no período, a partir do saldo imediatamente anterior ao início.
+		/// </summary>
+		/// <param name="start">Data de início do periodo (inclusive)</param>
+		/// <param name="end">Data de fim do periodo (inclusive)</param>
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[HttpGet("daily")]
 		public async Task<IActionResult> GetDailyAsync(DateTimeOffset? start, DateTimeOffset? end)
 		{

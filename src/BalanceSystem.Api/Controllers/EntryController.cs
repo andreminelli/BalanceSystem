@@ -25,6 +25,12 @@ namespace BalanceSystem.Api.Controllers
 			_balanceService = balanceService;
 		}
 
+		/// <summary>
+		/// Inclui um novo lançamento para o usuário autenticado
+		/// </summary>
+		/// <param name="newEntry"></param>
+		[ProducesResponseType(StatusCodes.Status201Created)]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[HttpPost]
 		public async Task<IActionResult> AddAsync(NewEntry newEntry)
 		{

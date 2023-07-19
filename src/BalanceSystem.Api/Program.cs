@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Reflection;
 using System.Text;
 using System.Text.Json.Serialization;
 
@@ -54,32 +55,40 @@ builder.Services
 	});
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(setup =>
+builder.Services.AddSwaggerGen(options =>
+{
+	options.SwaggerDoc("v1", new OpenApiInfo
 	{
-		setup.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
-			{
-				Name = "Authorization",
-				Type = SecuritySchemeType.ApiKey,
-				Scheme = "Bearer",
-				BearerFormat = "JWT",
-				In = ParameterLocation.Header,
-				Description = "JWT Authorization header using the Bearer scheme.",
-			});
-		setup.AddSecurityRequirement(new OpenApiSecurityRequirement
-			{
-				{
-					new OpenApiSecurityScheme
-					{
-						Reference = new OpenApiReference
-						{
-							Type = ReferenceType.SecurityScheme,
-							Id = "Bearer"
-						}
-					},
-					new string[] {}
-				}
-			});
+		Version = "v1",
+		Title = "BalanceSystem API",
 	});
+	options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+	{
+		Name = "Authorization",
+		Type = SecuritySchemeType.ApiKey,
+		Scheme = "Bearer",
+		BearerFormat = "JWT",
+		In = ParameterLocation.Header,
+		Description = "JWT Authorization header using the Bearer scheme.",
+	});
+	options.AddSecurityRequirement(new OpenApiSecurityRequirement
+	{
+		{
+			new OpenApiSecurityScheme
+			{
+				Reference = new OpenApiReference
+				{
+					Type = ReferenceType.SecurityScheme,
+					Id = "Bearer"
+				}
+			},
+			new string[] {}
+		}
+	});
+
+	var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+	options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+});
 
 var app = builder.Build();
 
