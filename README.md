@@ -52,11 +52,16 @@ A autenticação de usuários é feita utilizando tokens JWT. O *Subject* do token é
 }
 ```
 
-No exemeplo acima o sistema irá criar um usuário com identificador 2358022 e nome Bob Doe, utilizando este contexto para as operações na API.
+No exemplo acima o sistema irá criar um usuário com identificador 2358022 e nome Bob Doe, utilizando este contexto para as operações na API.
 
+Para testes, qualquer JWT gerado usando a chave `qwertyuiopasdfghjklzxcvbnm123456`. 
 
+> Esta chave é configurada no arquivo `appsetting.json`, pelo array em `Jwt:Keys`.
 
-As chaves de validação de tokens configuradas
+Neste [site](http://jwtbuilder.jamiekurtz.com/) pode-se gerar JWT com expiração facilmente. 
+A chave no projeto já está configurada para a mesma utilizada ali. 
+
+Basta ajustar o *subject* conforme o exemplo acima, escolher a expiração do token e clicar no botão "Create Signed JWT", no final da página.
 
 ## Arquitetura de sistema
 
