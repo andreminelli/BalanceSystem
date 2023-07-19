@@ -24,11 +24,19 @@ namespace BalanceSystem.Api.Controllers
 			_balanceService = balanceService;
 		}
 
-		[HttpGet]
-		public async Task<IActionResult> GetAsync(DateTimeOffset start, DateTimeOffset end)
+		[HttpGet("summary")]
+		public async Task<IActionResult> GetSummaryAsync(DateTimeOffset? start, DateTimeOffset? end)
 		{
 			var account = await _accountRetrievalService.GetAuthenticatedAsync();
 			var balance = await _balanceService.GetBalanceAsync(account, start, end);
+			return Ok(balance);
+		}
+
+		[HttpGet("daily")]
+		public async Task<IActionResult> GetDailyAsync(DateTimeOffset? start, DateTimeOffset? end)
+		{
+			var account = await _accountRetrievalService.GetAuthenticatedAsync();
+			var balance = await _balanceService.GetDailyBalanceAsync(account, start, end);
 			return Ok(balance);
 		}
 	}
