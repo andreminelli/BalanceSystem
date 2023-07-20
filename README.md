@@ -11,10 +11,40 @@ Principais tecnologias e frameworks utilizados:
 * JSON Web Tokens (JWT)
 * OpenAPI (Swagger)
 
+## Arquitetura de sistema
+
+O diagrama de contexto de sistema abaixo dá uma visão de alto nível das interações e funcionalidades:
+
+![Contexto de Sistema](/docs/system_context.png)
+
+O diagrama de containers abaixo mostra uma visão um pouco mais detalhada do sistema.
+
+![Containers](/docs/containers.png)
+
+Ele foi implementado como uma API REST, usando ASP.NET Core. Os dados são salvos em um banco de dados relacional PostgreSql, utilizando Entity Framework Core 6.0 para a persistência.
+
+A implantação completa prevê um API Gateway a fim de expor a API REST anterior, com as responsabilidades de:
+
+ * gerir a base de usuários com acesso à API, gerando tokens JWT (utilizados para a autenticação da API)
+	
+ * fazer a terminação HTTPS para o cliente
+	 
+ * registrar informações de monitoramento (como métricas de tempo de resposta e quantidade de sucesso/falha)
+
+> O API Gateway não faz parte deste repositório. Uma solução OSS como Kong poderia ser adicionada para exemplificar o sistema completo.
+
+## Arquitetura de software
+
+O código foi estruturado baseado em _onion architecture_, conforme a imagem abaixo:
+
+![Estrutura de projetos](/docs/code_diagram.png)
+
 ## Como executar
 
 Requisitos para execução:
 * Docker & Docker Compose
+ 
+### Pelo Docker
 
 Para iniciar, execute o comando abaixo a partir da raiz do repositório:
 ```
@@ -23,7 +53,15 @@ Para iniciar, execute o comando abaixo a partir da raiz do repositório:
 
 > **Observação**: é necessário passar explicitamente o arquivo como acima para que o arquivo docker-compose.override.yml (usado apenas em tempo de desenvolvimento) não seja carregado.
 
-### API
+### Pelo Visual Studio 
+
+É recomendado utilizar o Visual Studio 2022. 
+
+Abra a *solution* em `src\BalanceSystem.sln`. Configure a inicialização para utilizar o Docker Compose, conforme a figura abaixo:
+
+![Estrutura de projetos](/docs/vs_start_docker_compose.jpg)
+
+### Acessando a API
 
 Está disponível no endereço base: 
 
@@ -62,35 +100,6 @@ Neste [site](http://jwtbuilder.jamiekurtz.com/) pode-se gerar JWT com expiração 
 A chave no projeto já está configurada para a mesma utilizada ali. 
 
 Basta ajustar o *subject* conforme o exemplo acima, escolher a expiração do token e clicar no botão "Create Signed JWT", no final da página.
-
-## Arquitetura de sistema
-
-O diagrama de contexto de sistema abaixo dá uma visão de alto nível das interações e funcionalidades:
-
-![Contexto de Sistema](/docs/system_context.png)
-
-O diagrama de containers abaixo mostra uma visão um pouco mais detalhada do sistema.
-
-![Containers](/docs/containers.png)
-
-Ele foi implementado como uma API REST, usando ASP.NET Core. Os dados são salvos em um banco de dados relacional PostgreSql, utilizando Entity Framework Core 6.0 para a persistência.
-
-A implantação completa prevê um API Gateway a fim de expor a API REST anterior, com as responsabilidades de:
-
- * gerir a base de usuários com acesso à API, gerando tokens JWT (utilizados para a autenticação da API)
-	
- * fazer a terminação HTTPS para o cliente
-	 
- * registrar informações de monitoramento (como métricas de tempo de resposta e quantidade de sucesso/falha)
-
-> O API Gateway não faz parte deste repositório. Uma solução OSS como Kong poderia ser adicionada para exemplificar o sistema completo.
-
-
-## Arquitetura de software
-
-O código foi estruturado baseado em _onion architecture_, conforme a imagem abaixo:
-
-![Estrutura de projetos](/docs/code_diagram.png)
 
 ## Recomendações para ambiente de produção
 
