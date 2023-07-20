@@ -1,5 +1,6 @@
 ﻿using BalanceSystem.Core;
 using BalanceSystem.DataAccess;
+using System.Runtime.CompilerServices;
 
 namespace BalanceSystem.Services
 {
@@ -25,10 +26,12 @@ namespace BalanceSystem.Services
 
 		public async Task<Balance> GetBalanceAsync(Account account, DateTimeOffset? startDate = null, DateTimeOffset? endDate = null)
 		{
+			var (start, end) = GetValidDatesOrThrow(startDate, endDate);
+
 			var entries = await _entryRepository.GetEntriesAsync(
 				account,
-				startDate ?? DateTimeOffset.MinValue,
-				endDate ?? DateTimeOffset.MaxValue);
+				start,
+				end);
 
 			var balance = new Balance(entries);
 
@@ -37,8 +40,7 @@ namespace BalanceSystem.Services
 
 		public async Task<IEnumerable<DailyBalance>> GetDailyBalanceAsync(Account account, DateTimeOffset? startDate = null, DateTimeOffset? endDate = null)
 		{
-			var start = startDate ?? DateTimeOffset.MinValue;
-			var end = endDate ?? DateTimeOffset.MaxValue;
+			var (start, end) = GetValidDatesOrThrow(startDate, endDate);
 
 			var beforeStartDate = start == DateTimeOffset.MinValue ? start : start.AddSeconds(-1);
 			var beforeStartDateBalance = await GetBalanceAsync(account, endDate: beforeStartDate);
@@ -73,6 +75,21 @@ namespace BalanceSystem.Services
 			});
 
 			return result;
+		}
+
+		private static (DateTimeOffset start, DateTimeOffset end) GetValidDatesOrThrow(
+			DateTimeOffset? startDate,
+			DateTimeOffset? endDate,
+			[CallerArgumentExpression(nameof(startDate))] string startDateParamName = "",
+			[CallerArgumentExpression(nameof(endDate))] string endDateParamName = "")
+		{
+			var start = startDate ?? DateTimeOffset.MinValue;
+			var end = endDate ?? DateTimeOffset.MaxValue;
+			if (start > end)
+			{
+				throw new ArgumentException($"'{startDateParamName}' must be greater than '{endDateParamName}'");
+			}
+			return (start, end);
 		}
 	}
 }

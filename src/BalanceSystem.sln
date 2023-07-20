@@ -28,7 +28,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BalanceSystem.Core.UnitTests", "BalanceSystem.Core.UnitTests\BalanceSystem.Core.UnitTests.csproj", "{6B3583EB-BBDD-471F-A03E-064B28D7AC23}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BalanceSystem.Core.UnitTests", "BalanceSystem.Core.UnitTests\BalanceSystem.Core.UnitTests.csproj", "{6B3583EB-BBDD-471F-A03E-064B28D7AC23}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BalanceSystem.Services.UnitTests", "BalanceSystem.Services.UnitTests\BalanceSystem.Services.UnitTests.csproj", "{47993229-C91E-41AE-9088-5E9B237AB429}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -64,6 +66,10 @@ Global
 		{6B3583EB-BBDD-471F-A03E-064B28D7AC23}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6B3583EB-BBDD-471F-A03E-064B28D7AC23}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6B3583EB-BBDD-471F-A03E-064B28D7AC23}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47993229-C91E-41AE-9088-5E9B237AB429}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47993229-C91E-41AE-9088-5E9B237AB429}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47993229-C91E-41AE-9088-5E9B237AB429}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47993229-C91E-41AE-9088-5E9B237AB429}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -75,6 +81,7 @@ Global
 		{41F92319-E588-4CC6-A041-94C1647A2D70} = {E39E0B02-89BB-4859-9135-C3135C887F3E}
 		{ADB5280A-63A8-4671-BA4B-F13FD092F358} = {ECE1E2E4-6BCE-4D45-B24F-DF8EC33671E0}
 		{6B3583EB-BBDD-471F-A03E-064B28D7AC23} = {BD13E1B3-6EB4-442A-88A4-122ED035D371}
+		{47993229-C91E-41AE-9088-5E9B237AB429} = {E39E0B02-89BB-4859-9135-C3135C887F3E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C2E36C2B-3B78-429B-BD92-4C0EBEC15A03}

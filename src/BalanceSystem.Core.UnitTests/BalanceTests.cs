@@ -1,7 +1,6 @@
 using AutoFixture;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Shouldly;
-using System;
 using System.Linq;
 
 namespace BalanceSystem.Core.UnitTests
