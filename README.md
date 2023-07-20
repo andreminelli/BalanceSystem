@@ -42,7 +42,7 @@ O código foi estruturado baseado em _onion architecture_, conforme a imagem abai
 ## Como executar
 
 Requisitos para execução:
-* Docker & Docker Compose
+* Docker & Docker Compose (configurado para usar *containers* Linux)
  
 ### Pelo Docker
 
