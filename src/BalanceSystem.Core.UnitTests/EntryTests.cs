@@ -8,6 +8,12 @@ namespace BalanceSystem.Core.UnitTests
 	public class EntryTests
 	{
 		[TestMethod]
+		public void Amount_ShouldBePositive()
+		{
+			Should.Throw<ArgumentException>(() => new Entry { Amount = -1 });
+		}
+
+		[TestMethod]
 		[DataRow(-10, EntryType.Credit, 25, 15)]
 		[DataRow(0, EntryType.Credit, 25, 25)]
 		[DataRow(500, EntryType.Credit, 25, 525)]
@@ -20,7 +26,7 @@ namespace BalanceSystem.Core.UnitTests
 			var target = new Entry
 			{
 				Amount = Convert.ToDecimal(entryAmount),
-				Date = System.DateTimeOffset.Now,
+				Date = DateTimeOffset.Now,
 				Type = entryType,
 				Description = "Some info"
 			};
