@@ -77,19 +77,17 @@ namespace BalanceSystem.Services.UnitTests
 		public async Task GetBalances_WithCreditAndDebit_ShouldReturnCorrectBalance()
 		{
 			// Arrange
-			var account = Fixture.Create<Account>();
-			// Arrange
 			var creditEntry = CreateRandom(EntryType.Credit);
 			var debitEntry = CreateRandom(EntryType.Debit);
 			var entries = new[] { creditEntry, creditEntry, debitEntry };
 			var startDate = entries.Min(e => e.Date);
 			var endDate = entries.Max(e => e.Date);
 			EntryRepository
-				.GetEntriesAsync(account, startDate, endDate)
+				.GetEntriesAsync(ExistingAccount, startDate, endDate)
 				.Returns(entries);
 
 			// Act
-			var result = await Target.GetBalanceAsync(account, startDate, endDate);
+			var result = await Target.GetBalanceAsync(ExistingAccount, startDate, endDate);
 
 			// Assert
 			result.Amount.ShouldBe(creditEntry.Amount + creditEntry.Amount - debitEntry.Amount);
@@ -97,11 +95,81 @@ namespace BalanceSystem.Services.UnitTests
 			result.EndDate.ShouldBe(endDate);
 		}
 
-		private Entry CreateRandom(EntryType type, Account? account = null)
+		[TestMethod]
+		public async Task GetDailyBalances_ShouldThrowWhenStartDateIsLessThanEndDate()
+		{
+			// Arrange
+			var startDate = Fixture.Create<DateTimeOffset>();
+			var endDate = startDate.AddDays(-1);
+
+			// Act
+			await Should.ThrowAsync<ArgumentException>(async () =>
+				await Target.GetBalanceAsync(ExistingAccount, startDate, endDate));
+		}
+
+		[TestMethod]
+		public async Task GetDailyBalances_WithoutPreviousBalance_ShouldStartFromFirstEntryDate()
+		{
+			// Arrange
+			var creditEntry1 = CreateRandom(EntryType.Credit);
+			var creditEntry2 = CreateRandom(EntryType.Credit);
+			var entries = new[] { creditEntry1, creditEntry2 };
+
+			var minEntryDate = entries.Min(e => e.Date);
+
+			EntryRepository
+				.GetEntriesAsync(ExistingAccount, DateTimeOffset.MinValue, DateTimeOffset.MinValue)
+				.Returns(Enumerable.Empty<Entry>());
+
+			EntryRepository
+				.GetEntriesAsync(ExistingAccount, DateTimeOffset.MinValue, DateTimeOffset.MaxValue)
+				.Returns(entries);
+
+			// Act
+			var result = await Target.GetDailyBalanceAsync(ExistingAccount);
+
+			// Assert
+			result.ShouldNotBeNull();
+			result.First().Date.ShouldBe(minEntryDate.Date);
+		}
+
+		[TestMethod]
+		public async Task GetDailyBalances_WithPreviousBalance_ShouldStartFromFirstDayBeforeStartDate()
+		{
+			// Arrange
+			var creditEntry1 = CreateRandom(EntryType.Credit);
+			var creditEntry2 = CreateRandom(EntryType.Credit);
+			var entries = new[] { creditEntry1, creditEntry2 };
+
+			var minEntryDate = entries.Min(e => e.Date);
+
+			var beforeMinEntryDate = minEntryDate.AddDays(-Fixture.Create<uint>());
+			var creditEntryA = CreateRandom(EntryType.Credit, date: beforeMinEntryDate);
+			var previousEntries = new[] { creditEntryA };
+
+			EntryRepository
+				.GetEntriesAsync(ExistingAccount, Arg.Is<DateTimeOffset>(arg => arg == DateTimeOffset.MinValue), Arg.Is<DateTimeOffset>(arg => arg < minEntryDate))
+				.Returns(previousEntries);
+
+			EntryRepository
+				.GetEntriesAsync(ExistingAccount, minEntryDate, Arg.Any<DateTimeOffset>())
+				.Returns(entries);
+
+			// Act
+			var result = await Target.GetDailyBalanceAsync(ExistingAccount, startDate: minEntryDate);
+
+			// Assert
+			result.ShouldNotBeNull();
+			result.First().Date.ShouldBe(minEntryDate.Date.AddDays(-1));
+			result.First().Amount.ShouldBe(creditEntryA.Amount);
+		}
+
+		private Entry CreateRandom(EntryType type, Account? account = null, DateTimeOffset? date = null)
 			=> Fixture
 				.Build<Entry>()
 				.With(e => e.Account, account ?? ExistingAccount)
 				.With(e => e.Type, type)
+				.With(e => e.Date, date ?? Fixture.Create<DateTimeOffset>())
 				.Create();
 
 	}

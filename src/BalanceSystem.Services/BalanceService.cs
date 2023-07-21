@@ -49,7 +49,7 @@ namespace BalanceSystem.Services
 
 			var result = new List<DailyBalance>();
 
-			var currentDate = beforeStartDate.Date;
+			var currentDate = start == DateTimeOffset.MinValue ? beforeStartDate.Date : start.AddDays(-1).Date;
 			var currentDateAmount = beforeStartDateBalance.Amount;
 			foreach (var entry in entries.OrderBy(entry => entry.Date))
 			{
